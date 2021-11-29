@@ -4,7 +4,28 @@ def choose_color():
     colorentrybox.insert(END, "{},{},{}".format(int(color_code[0][0]), int(color_code[0][1]), int(color_code[0][2])))
 
 def createimage():
-    print("Create Images")
+    color = colorentrybox.get()
+    extension = extensionentrybox.get()
+    name = imagenameentrybox.get()
+    imagenumber = imagenumberentrybox.get()
+    width = int(widthentrybox.get())
+    height = int(heightentrybox.get())
+    url = filedialog.askdirectory()
+    convertstatuslabel.configure(text="{} - Creating Image ----------".format(imagenumber))
+    col = color.split(',')
+    colorname = []
+    try:
+        for i in col:
+            colorname.append(int(i))
+        colorname = tuple(colorname)
+    except:
+        colorname = col[0]
+    for i in range(int(imagenumber)):
+        path = url + '/{}{}{}'.format(name, i+1, extension)
+        im = Image.new("RGB", (width, height), color=colorname)
+        im.save(path)
+    convertstatuslabel.configure(text="{} - Images Created Sucessfully ------".format(imagenumber))
+
 
 from tkinter import *
 from tkinter import colorchooser, filedialog
